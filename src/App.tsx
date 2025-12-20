@@ -1,94 +1,32 @@
-
-import { useEffect, useRef, useState } from 'react'
-import './App.css'
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from './Home'
+import JoinRoom from './JoinRoom'
+import { useEffect } from 'react'
+import { socketRef } from './socket'
 
 function App() {
 
-  const wsRef = useRef<any>(null);
-  const inputRef = useRef<any>(null);
+  useEffect(() => {
+    socketRef.current = new WebSocket('ws://localhost:3001');
 
-  const [messages,setMessages] = useState(["hii there","what's up?"]);
-
-  
-
-    useEffect(()=>{
-
-    const ws = new WebSocket("ws://localhost:8080")
-      ws.onmessage = (event) =>{
-        setMessages(m=>[...m,event.data]);
-      }
-      wsRef.current = ws;
-
-      ws.onopen=()=>{
-        ws.send(JSON.stringify(
-          {
-            type : "join",
-            payload:{
-              roomId : "red",
-              name:"sharad"
-            }
-          }
-        ))
-      }
-
-    },[])
-
-    const jjfxn =() =>{
-
-      wsRef.current.send(JSON.stringify(
-        {
-          type:"chat",
-          payload:{
-            message:inputRef.current.value
-          }
-        }
-      ))
-
-      inputRef.current.value = "";
-    }
+    return () => {
+      socketRef.current?.close();
+    };
+  }, []);
 
   return (
-    <>
-      
-      <div className='h-screen w-screen bg-black flex flex-col'>
+    <div>
+        Chat App
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/JoinRoom" element={<JoinRoom />} />
+      </Routes>
+    </BrowserRouter>
 
-
-            <div className="text-center text-white font-mono mt-2">
-              Chat App
-            </div>
-
-            <div className="h-[80vh] bg-purple-900 m-4 ">
-              
-              {messages.map(message =>
-
-                  <div className='flex items-center'>
-                    <span className='text-sm  text-yellow-100 p-1'>sharad : </span>
-                    
-                    <div className='bg-white p-3 m-1 w-max rounded-lg text-sm' key={message}>{message}</div>
-                    
-                  </div>
-                 
-                 )}
-            </div>
-
-            <div className=''>
-
-              <input ref={inputRef} className="text w-[75vw] p-4 ml-4 mr-4" />
-              <button className='bg-orange-500 text-white p-4 rounded-md' onClick={jjfxn}>Send</button>
-
-            </div>
-
-
-
-
-
-
-      </div>
-      
-      
-    </>
-  )
+    
+    </div>
+  );
 }
 
-export default App
+export default App;
