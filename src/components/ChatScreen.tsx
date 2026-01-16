@@ -1,4 +1,4 @@
-import { X } from 'lucide-react';
+// import { X } from 'lucide-react';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import type { Message } from '../types/Message';
