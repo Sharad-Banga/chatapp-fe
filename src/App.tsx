@@ -32,7 +32,7 @@ export default function App() {
 
   /** Start websocket */
   const handleStartChat = () => {
-    const socket = new WebSocket(API_URL || 'wss://13.204.88.104:3001');
+    const socket = new WebSocket(API_URL || 'ws://13.204.88.104:3001');
 
     socket.onopen = () => {
       setWs(socket);
