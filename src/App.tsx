@@ -32,7 +32,7 @@ export default function App() {
 
   /** Start websocket */
   const handleStartChat = () => {
-    const socket = new WebSocket(API_URL || 'ws://localhost:3001');
+    const socket = new WebSocket(API_URL );
 
     socket.onopen = () => {
       setWs(socket);
