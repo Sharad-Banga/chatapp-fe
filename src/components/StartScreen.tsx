@@ -24,7 +24,7 @@ export default function StartScreen({ onStart }: Props) {
         </h1>
 
         <p className="text-gray-400 mb-6 text-sm ">
-          Simple.  Real-time.  
+          Simple.  Real-time. 
         </p>
 
         <button

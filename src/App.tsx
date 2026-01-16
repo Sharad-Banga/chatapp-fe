@@ -3,6 +3,9 @@ import StartScreen from './components/StartScreen';
 import JoinRoom from './components/JoinRoom';
 import ChatScreen from './components/ChatScreen';
 import type { Message } from './types/Message';
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 
 type Screen = 'start' | 'join' | 'chat';
 
@@ -29,7 +32,7 @@ export default function App() {
 
   /** Start websocket */
   const handleStartChat = () => {
-    const socket = new WebSocket('ws://localhost:3001');
+    const socket = new WebSocket(API_URL || 'ws://localhost:3001');
 
     socket.onopen = () => {
       setWs(socket);
